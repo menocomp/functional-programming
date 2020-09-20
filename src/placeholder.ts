@@ -1,3 +1,3 @@
 const __ = "placeholder";
 
-exports = placeholder;
+export { __ };

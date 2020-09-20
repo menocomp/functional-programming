@@ -1,12 +1,18 @@
-const __ = require('./placeholder');
+import { __ } from "./placeholder";
+import { Curry } from './curry.types'
 
-const curry = (fn) => {
-  const container = {
+interface ICurryContainer {
+  [K: string]: any;
+  args: any[];
+}
+
+const curry: Curry = (fn: Function) => {
+  const container: ICurryContainer = {
     args: [],
   };
 
   for (let index = 0; index <= fn.length - 1; index++) {
-    container[`fn${index + 1}`] = (...args) => {
+    container[`fn${index + 1}`] = (...args: any[]) => {
       args.forEach((arg, i) => {
         if (i === 0 && container.args.find((arg) => arg === __)) {
           container.args.splice(
@@ -30,4 +36,4 @@ const curry = (fn) => {
   return container[`fn${fn.length}`];
 };
 
-exports = curry;
+export { curry };
