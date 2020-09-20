@@ -1,0 +1,24 @@
+{
+  "name": "functional-programming",
+  "version": "1.0.0",
+  "description": "Just trying to reverse engineer some common FP functions.",
+  "main": "lib/index.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/menocomp/functional-programming.git"
+  },
+  "keywords": [],
+  "author": "Mina Luke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/menocomp/functional-programming/issues"
+  },
+  "homepage": "https://github.com/menocomp/functional-programming#readme"
+}
