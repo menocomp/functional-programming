@@ -26,7 +26,9 @@ const curry: Curry = (fn: Function) => {
       });
 
       if (container.args.filter((arg) => arg !== __).length === fn.length) {
-        return fn(...container.args);
+        const result = fn(...container.args);
+        container.args = [];
+        return result;
       } else {
         return container[`fn${index}`];
       }

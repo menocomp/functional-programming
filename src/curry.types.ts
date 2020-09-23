@@ -9,5 +9,9 @@ type Recursive<T extends any[], R extends any> =
       (x: T[0]) => Recursive<DropFirstInTuple<T>, R>                
       : (x: T[0]) => R
 
+type AllOverloads<A extends ArityFn> = {
+  (...args: Parameters<A>): ReturnType<A>;
+  (x: Parameters<A>[0]): currified<DropFirstInTuple<Parameters<A>>, ReturnType<A>>[0];
+}
 
-export type Curry = <A extends ArityFn>(fn: A) => currified<Parameters<A>, ReturnType<A>>[0];
+export type Curry = <A extends ArityFn>(fn: A) => AllOverloads<A>;
