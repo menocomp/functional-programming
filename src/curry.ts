@@ -5,7 +5,7 @@ interface ICurryContainer {
   args: any[];
 }
 
-const curry = (fn: Function) => {
+const curry: Curry = (fn: Function) => {
   const container: ICurryContainer = {
     args: [],
   };
