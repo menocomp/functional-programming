@@ -1,37 +1,29 @@
 import { __ } from "./placeholder";
 import { Curry } from "./curry.types";
 
-interface ICurryContainer {
-  args: any[];
-}
-
 const curry: Curry = (fn: Function) => {
-  const container: ICurryContainer = {
-    args: [],
-  };
-
-  const readMoreParams = (...args: any[]) => {
-    args.forEach((arg, i) => {
-      if (arg !== __ && container.args.find((arg) => arg === __)) {
-        container.args.splice(
-          container.args.findIndex((arg) => arg === __),
+  const readMoreParams = (currentArgs: any[]) => (...newArgs: any[]) => {
+    newArgs.forEach((arg, i) => {
+      if (arg !== __ && currentArgs.find((arg) => arg === __)) {
+        currentArgs.splice(
+          currentArgs.findIndex((arg) => arg === __),
           1,
           arg
         );
-      } else if (container.args.length < fn.length) {
-        container.args.push(arg);
+      } else if (currentArgs.length < fn.length) {
+        currentArgs.push(arg);
       }
     });
 
-    if (container.args.filter((arg) => arg !== __).length === fn.length) {
-      const result = fn(...container.args);
-      container.args = [];
+    if (currentArgs.filter((arg) => arg !== __).length === fn.length) {
+      const result = fn(...currentArgs);
+      currentArgs = [];
       return result;
     }
-    return readMoreParams;
+    return readMoreParams(currentArgs);
   };
 
-  return readMoreParams;
+  return readMoreParams([]);
 };
 
 export { curry };
