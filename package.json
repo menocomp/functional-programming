@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/menocomp/functional-programming/issues"
   },
-  "homepage": "https://github.com/menocomp/functional-programming#readme"
+  "homepage": "https://github.com/menocomp/functional-programming#readme",
+  "devDependencies": {
+    "ts-node": "^9.0.0"
+  }
 }

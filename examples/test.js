@@ -1,6 +1,6 @@
-import { __, curry } from '../src';
+const { __, curry } = require('../lib');
 
-const Add = (x: number, y: number) => x + y;
+const Add = (x, y) => x + y;
 
 const curriedAdd = curry(Add);
 
