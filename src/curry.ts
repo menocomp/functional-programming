@@ -3,7 +3,7 @@ import { Curry } from "./curry.types";
 
 const curry: Curry = (fn: Function) => {
   const readMoreParams = (currentArgs: any[]) => (...newArgs: any[]) => {
-    newArgs.forEach((arg, i) => {
+    newArgs.forEach((arg) => {
       if (arg !== __ && currentArgs.find((arg) => arg === __)) {
         currentArgs.splice(
           currentArgs.findIndex((arg) => arg === __),
@@ -20,7 +20,10 @@ const curry: Curry = (fn: Function) => {
       currentArgs = [];
       return result;
     }
-    return readMoreParams(currentArgs);
+
+    const result = readMoreParams(currentArgs);
+    currentArgs = [];
+    return result;
   };
 
   return readMoreParams([]);

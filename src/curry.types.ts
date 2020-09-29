@@ -1,8 +1,8 @@
-import { ArityFn, DropFirstInTuple } from './helpers.types'
+import { ArityFn, DropFirstInTuple, Placeholder } from './helpers.types'
 
-type currified<T extends any[], R extends any> = {
+type currified<T extends any[], R extends any> = T["length"] extends 0 ? R : {
   [K in keyof T]: Recursive<T, R>
-};
+}[0];
 
 type Recursive<T extends any[], R extends any> =     
   "0" extends keyof DropFirstInTuple<T> ?             
@@ -11,7 +11,10 @@ type Recursive<T extends any[], R extends any> =
 
 type AllOverloads<A extends ArityFn> = {
   (...args: Parameters<A>): ReturnType<A>;
-  (x: Parameters<A>[0]): currified<DropFirstInTuple<Parameters<A>>, ReturnType<A>>[0];
+  (x: Parameters<A>[0]): currified<DropFirstInTuple<Parameters<A>>, ReturnType<A>>;
+  (x: Placeholder): (y: Parameters<A>[0]) => currified<DropFirstInTuple<Parameters<A>>, ReturnType<A>>
+  (x: Placeholder, y: Parameters<A>[0]): currified<DropFirstInTuple<Parameters<A>>, ReturnType<A>>
+  (x: Parameters<A>[0], y: Placeholder): currified<DropFirstInTuple<Parameters<A>>, ReturnType<A>>
 }
 
 export type Curry = <A extends ArityFn>(fn: A) => AllOverloads<A>;

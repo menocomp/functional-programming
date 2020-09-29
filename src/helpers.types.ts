@@ -11,3 +11,4 @@ export type DropFirstInTuple<T extends any[]> = T extends [arg1: any, ...rest: i
 export type PrependInTuple<P, T extends any[]> = T extends [...rest: infer R] ? [P, ...R] : [];
 
 export type ArityFn = (...arg: any) => any;
+export type Placeholder = "placeholder";
