@@ -7,20 +7,9 @@ export type PreviousNumber<T extends number> = PrependInTuple<
   never,
   NumberLiterals
 >[T];
+
 export type NextNumber<T extends number> = DropFirstInTuple<NumberLiterals>[T];
 
-export type GetLength<original extends any[]> = original extends {
-  length: infer L;
-}
-  ? L
-  : never;
-
-export type PickLastInTuple<T extends any[]> = T extends [
-  ...rest: infer U,
-  argn: infer L
-]
-  ? L
-  : never;
 export type DropFirstInTuple<T extends any[]> = T extends [
   arg1: any,
   ...rest: infer U
@@ -31,5 +20,6 @@ export type PrependInTuple<P, T extends any[]> = T extends [...rest: infer R]
   ? [P, ...R]
   : [];
 
+export type UnaryFn = (arg: any) => any;
 export type ArityFn = (...arg: any) => any;
 export type Placeholder = "placeholder";

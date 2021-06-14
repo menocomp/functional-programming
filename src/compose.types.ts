@@ -1,14 +1,14 @@
 import {
+  UnaryFn,
   ArityFn,
   StringLiterals,
   PreviousNumber,
   NextNumber,
   String2Number,
   Number2String,
-  GetLength,
 } from "./helpers.types";
 
-type ValidChain<T extends ArityFn[]> = {
+type ValidChain<T extends [...UnaryFn[], ArityFn]> = {
   [K in keyof T]: K extends StringLiterals[any]
     ? K extends Number2String<PreviousNumber<T["length"]>>
       ? T[K]
@@ -20,13 +20,13 @@ type ValidChain<T extends ArityFn[]> = {
     : T[K];
 };
 
-type FirstFnParameterType<T extends any[]> = Parameters<
-  T[PreviousNumber<GetLength<T>>]
->[0];
+type FirstFnParametersType<T extends any[]> = Parameters<
+  T[PreviousNumber<T["length"]>]
+>;
 type LastFnReturnType<T extends any[]> = ReturnType<T[0]>;
 
-type Compose = <T extends ArityFn[]>(
+type Compose = <T extends [...UnaryFn[], ArityFn]>(
   ...fns: ValidChain<T>
-) => (p: FirstFnParameterType<T>) => LastFnReturnType<T>;
+) => (...p: FirstFnParametersType<T>) => LastFnReturnType<T>;
 
 export { Compose };
