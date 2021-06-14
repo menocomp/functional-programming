@@ -1,4 +1,12 @@
-import { ArityFn, StringLiterals, PreviousNumber, NextNumber, String2Number, Number2String, PickLastInTuple } from "./helpers.types";
+import {
+  ArityFn,
+  StringLiterals,
+  PreviousNumber,
+  NextNumber,
+  String2Number,
+  Number2String,
+  GetLength,
+} from "./helpers.types";
 
 type ValidChain<T extends ArityFn[]> = {
   [K in keyof T]: K extends StringLiterals[any]
@@ -12,9 +20,13 @@ type ValidChain<T extends ArityFn[]> = {
     : T[K];
 };
 
-type FirstFnParameterType<T extends any[]> = Parameters<PickLastInTuple<T>>[any];
+type FirstFnParameterType<T extends any[]> = Parameters<
+  T[PreviousNumber<GetLength<T>>]
+>[0];
 type LastFnReturnType<T extends any[]> = ReturnType<T[0]>;
 
-type Compose = <T extends ArityFn[]>(...fns: ValidChain<T>) => (p: FirstFnParameterType<T>) => LastFnReturnType<T>;
+type Compose = <T extends ArityFn[]>(
+  ...fns: ValidChain<T>
+) => (p: FirstFnParameterType<T>) => LastFnReturnType<T>;
 
-export { Compose }
+export { Compose };
